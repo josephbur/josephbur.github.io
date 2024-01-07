@@ -4163,6 +4163,7 @@ input[type="button"].btn--primary:focus {
     background-color: white;
     position: relative;
     overflow: hidden;
+    padding: 5px;
 }
 
 .folio-item__thumb::before {
