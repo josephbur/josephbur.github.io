@@ -83,11 +83,12 @@
 /* -------------------------------------------------------------------
  * ## fonts
  * ------------------------------------------------------------------- */
-@import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Serif:ital,wght@0,300;0,400;0,500;0,600;0,700;1,200;1,300;1,400;1,500;1,600&family=Inter:wght@300;400;500;600;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Serif:ital,wght@0,300;0,400;0,500;0,600;0,700;1,200;1,300;1,400;1,500;1,600&family=Inter:wght@300;400;500;600;700&family=Open+Sans:wght@300;400;500;600;700&display=swap");
 
 :root {
     --font-1: "Inter", sans-serif;
     --font-2: "IBM Plex Serif", serif;
+    --font-3: "Open Sans", sans-serif;
     /* monospace
      */
     --font-mono: Consolas, "Andale Mono", Courier, "Courier New", monospace;
@@ -2645,9 +2646,9 @@ input[type="button"].btn--primary:focus {
 }
 
 .skill-bars-fat li {
-    height: 5.2rem;
+    height: 4rem;
     background: transparent;
-    margin-bottom: 5.2rem;
+    margin-bottom: 4rem;
     padding: 0;
     position: relative;
 }
@@ -2655,7 +2656,7 @@ input[type="button"].btn--primary:focus {
 .skill-bars-fat li strong {
     font-family: var(--font-1);
     font-weight: 600;
-    color: var(--color-text-dark);
+    color: var(--color-white);
     text-transform: uppercase;
     letter-spacing: .2em;
     font-size: calc(var(--text-size) * 0.7778);
@@ -2678,7 +2679,7 @@ input[type="button"].btn--primary:focus {
     content: "";
     display: block;
     height: 100%;
-    background-color: var(--color-gray-18);
+    background-color: var(--color-2-light);
 }
 
 .skill-bars-fat li .percent5::before {
@@ -3899,11 +3900,54 @@ input[type="button"].btn--primary:focus {
     color: white;
 }
 
+.s-about .info-list {
+    list-style: none;
+    margin-left: 0;
+}
+
+.s-about .info-list li {
+    padding: 0 0 1.5rem 0;
+    margin-bottom: .6rem;
+}
+
+.s-about .info-list li strong {
+    font-family: var(--font-3);
+    font-weight: 700;
+    color: #313131;
+    text-transform: uppercase;
+    letter-spacing: .2rem;
+    font-size: 1.5rem;
+    line-height: 3rem;
+}
+
+.s-about .info-list li span {
+    display: block;
+    font-family: var(--font-3);
+    font-weight: 700;
+    color: #888888;
+    font-size: 1.5rem;
+    line-height: 1;
+}
+
 .s-about__pic {
     width: var(--vspace-5);
     height: var(--vspace-5);
     border: 1.6rem solid rgba(255, 255, 255, 0.02);
     border-radius: 50%;
+}
+
+.s-about__content::after {
+    display: block;
+    content: "";
+    text-align: center;
+    height: 1px;
+    width: 50%;
+    background-color: rgba(255, 255, 255, 0.05);
+    -webkit-transform: translateX(-50%);
+    transform: translateX(-50%);
+    position: relative;
+    bottom: 0;
+    left: 50%;
 }
 
 .s-about__content-bottom {
@@ -3944,6 +3988,18 @@ input[type="button"].btn--primary:focus {
 .s-about__content-bottom .btn--download:hover svg path,
 .s-about__content-bottom .btn--download:focus svg path {
     fill: white;
+}
+
+.s-about__content-buttons {
+    text-align: center;
+}
+
+.s-about__content-buttons .btn {
+    width: 250px;
+}
+
+.s-about__content-buttons [class*="col"] .btn:first-child {
+    margin-right: 4rem;
 }
 
 /* -------------------------------------------------------------------
