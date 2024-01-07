@@ -3,26 +3,26 @@
  *
  * ------------------------------------------------------------------- */
 
-(function(html) {
+(function (html) {
 
     "use strict";
 
     html.className = html.className.replace(/\bno-js\b/g, '') + ' js ';
 
 
-   /* Preloader
-    * -------------------------------------------------- */
-    const ssPreloader = function() {
+    /* Preloader
+     * -------------------------------------------------- */
+    const ssPreloader = function () {
 
         const preloader = document.querySelector('#preloader');
         if (!preloader) return;
 
-        window.addEventListener('load', function() {
+        window.addEventListener('load', function () {
 
             document.querySelector('body').classList.remove('ss-preload');
             document.querySelector('body').classList.add('ss-loaded');
 
-            preloader.addEventListener('transitionend', function(e) {
+            preloader.addEventListener('transitionend', function (e) {
                 if (e.target.matches("#preloader")) {
                     this.style.display = 'none';
                 }
@@ -38,17 +38,17 @@
     }; // end ssPreloader
 
 
-   /* Parallax
-    * -------------------------------------------------- */
-    const ssParallax = function() {
+    /* Parallax
+     * -------------------------------------------------- */
+    const ssParallax = function () {
 
         const rellax = new Rellax('.rellax');
 
     }; // end ssParallax
 
 
-   /* Move header menu
-    * -------------------------------------------------- */
+    /* Move header menu
+     * -------------------------------------------------- */
     const ssMoveHeader = function () {
 
         const hdr = document.querySelector('.s-header');
@@ -57,7 +57,7 @@
 
         if (!(hdr && hero)) return;
 
-        setTimeout(function(){
+        setTimeout(function () {
             triggerHeight = hero.offsetHeight - 170;
         }, 300);
 
@@ -89,9 +89,9 @@
     }; // end ssMoveHeader
 
 
-   /* Mobile Menu
-    * ---------------------------------------------------- */
-    const ssMobileMenu = function() {
+    /* Mobile Menu
+     * ---------------------------------------------------- */
+    const ssMobileMenu = function () {
 
         const toggleButton = document.querySelector('.s-header__menu-toggle');
         const headerNavWrap = document.querySelector('.s-header__nav-wrap');
@@ -99,14 +99,14 @@
 
         if (!(toggleButton && headerNavWrap)) return;
 
-        toggleButton.addEventListener('click', function(event){
+        toggleButton.addEventListener('click', function (event) {
             event.preventDefault();
             toggleButton.classList.toggle('is-clicked');
             siteBody.classList.toggle('menu-is-open');
         });
 
-        headerNavWrap.querySelectorAll('.s-header__nav a').forEach(function(link) {
-            link.addEventListener("click", function(evt) {
+        headerNavWrap.querySelectorAll('.s-header__nav a').forEach(function (link) {
+            link.addEventListener("click", function (evt) {
 
                 // at 800px and below
                 if (window.matchMedia('(max-width: 800px)').matches) {
@@ -116,7 +116,7 @@
             });
         });
 
-        window.addEventListener('resize', function() {
+        window.addEventListener('resize', function () {
 
             // above 800px
             if (window.matchMedia('(min-width: 801px)').matches) {
@@ -128,47 +128,60 @@
     }; // end ssMobileMenu
 
 
-   /* Highlight active menu link on pagescroll
-    * ------------------------------------------------------ */
-    const ssScrollSpy = function() {
-
+    /* Highlight active menu link on pagescroll
+     * ------------------------------------------------------ */
+    const ssScrollSpy = function () {
         const sections = document.querySelectorAll(".target-section");
 
         // Add an event listener listening for scroll
         window.addEventListener("scroll", navHighlight);
 
         function navHighlight() {
-
-            // Get current scroll position
+            // Get current scroll position and document height
             let scrollY = window.pageYOffset;
+            let documentHeight = document.documentElement.scrollHeight;
 
-            // Loop through sections to get height(including padding and border),
-            // top and ID values for each
-            sections.forEach(function(current) {
+            // Check if user has reached the bottom of the page
+            if (scrollY + window.innerHeight >= documentHeight) {
+                // Highlight the last section
+                removeCurrentClassFromLinks();
+                document.querySelector(".s-header__nav a[href*=" + sections[sections.length - 1].getAttribute("id") + "]").parentNode.classList.add("current");
+                return; // Exit the function to avoid highlighting other sections
+            }
+
+            // Loop through sections to get height, top, and ID values for each
+            let highlighted = false; // Flag to track if a section has been highlighted
+            sections.forEach(function (current) {
                 const sectionHeight = current.offsetHeight;
                 const sectionTop = current.offsetTop - 50;
                 const sectionId = current.getAttribute("id");
 
-               /* If our current scroll position enters the space where current section
-                * on screen is, add .current class to parent element(li) of the thecorresponding
-                * navigation link, else remove it. To know which link is active, we use
-                * sectionId variable we are getting while looping through sections as
-                * an selector
-                */
+                // If the current scroll position enters the space where the current section
+                // on screen is, add .current class to the parent element (li) of the corresponding
+                // navigation link, else remove it.
                 if (scrollY > sectionTop && scrollY <= sectionTop + sectionHeight) {
+                    removeCurrentClassFromLinks();
                     document.querySelector(".s-header__nav a[href*=" + sectionId + "]").parentNode.classList.add("current");
-                } else {
-                    document.querySelector(".s-header__nav a[href*=" + sectionId + "]").parentNode.classList.remove("current");
+                    highlighted = true; // Set the flag to true
+                } else if (!highlighted) {
+                    // If no section has been highlighted yet, remove "current" class from other links
+                    removeCurrentClassFromLinks();
                 }
             });
         }
 
+        // Helper function to remove "current" class from all links
+        function removeCurrentClassFromLinks() {
+            document.querySelectorAll(".s-header__nav li").forEach(function (li) {
+                li.classList.remove("current");
+            });
+        }
     }; // end ssScrollSpy
 
 
-   /* Swiper
-    * ------------------------------------------------------ */
-    const ssSwiper = function() {
+    /* Swiper
+     * ------------------------------------------------------ */
+    const ssSwiper = function () {
 
         const mySwiper = new Swiper('.swiper-container', {
 
@@ -189,29 +202,29 @@
                     spaceBetween: 48
                 }
             }
-         });
+        });
 
     }; // end ssSwiper
 
 
-   /* Lightbox
-    * ------------------------------------------------------ */
-    const ssLightbox = function() {
+    /* Lightbox
+     * ------------------------------------------------------ */
+    const ssLightbox = function () {
 
         const folioLinks = document.querySelectorAll('.folio-item a');
         const modals = [];
 
-        folioLinks.forEach(function(link) {
+        folioLinks.forEach(function (link) {
             let modalbox = link.getAttribute('href');
             let instance = basicLightbox.create(
                 document.querySelector(modalbox),
                 {
-                    onShow: function(instance) {
+                    onShow: function (instance) {
                         //detect Escape key press
-                        document.addEventListener("keydown", function(evt) {
+                        document.addEventListener("keydown", function (evt) {
                             evt = evt || window.event;
-                            if(evt.keyCode === 27){
-                            instance.close();
+                            if (evt.keyCode === 27) {
+                                instance.close();
                             }
                         });
                     }
@@ -220,8 +233,8 @@
             modals.push(instance);
         });
 
-        folioLinks.forEach(function(link, index) {
-            link.addEventListener("click", function(e) {
+        folioLinks.forEach(function (link, index) {
+            link.addEventListener("click", function (e) {
                 e.preventDefault();
                 modals[index].show();
             });
@@ -230,20 +243,20 @@
     };  // end ssLightbox
 
 
-   /* Alert boxes
-    * ------------------------------------------------------ */
-    const ssAlertBoxes = function() {
+    /* Alert boxes
+     * ------------------------------------------------------ */
+    const ssAlertBoxes = function () {
 
         const boxes = document.querySelectorAll('.alert-box');
 
-        boxes.forEach(function(box) {
+        boxes.forEach(function (box) {
 
-            box.addEventListener('click', function(e){
+            box.addEventListener('click', function (e) {
                 if (e.target.matches(".alert-box__close")) {
                     e.stopPropagation();
                     e.target.parentElement.classList.add("hideit");
 
-                    setTimeout(function() {
+                    setTimeout(function () {
                         box.style.display = "none";
                     }, 500)
                 }
@@ -254,14 +267,14 @@
     }; // end ssAlertBoxes
 
 
-   /* Smoothscroll
-    * ------------------------------------------------------ */
+    /* Smoothscroll
+     * ------------------------------------------------------ */
     const ssSmoothScroll = function () {
 
         const triggers = document.querySelectorAll(".smoothscroll");
 
-        triggers.forEach(function(trigger) {
-            trigger.addEventListener("click", function() {
+        triggers.forEach(function (trigger) {
+            trigger.addEventListener("click", function () {
                 const target = trigger.getAttribute("href");
 
                 Jump(target, {
@@ -273,9 +286,9 @@
     }; // end ssSmoothScroll
 
 
-   /* back to top
-    * ------------------------------------------------------ */
-    const ssBackToTop = function() {
+    /* back to top
+     * ------------------------------------------------------ */
+    const ssBackToTop = function () {
 
         const pxShow = 600;
         const goTopButton = document.querySelector(".ss-go-top");
@@ -285,9 +298,9 @@
         // Show or hide the button
         if (window.scrollY >= pxShow) goTopButton.classList.add("link-is-visible");
 
-        window.addEventListener('scroll', function() {
+        window.addEventListener('scroll', function () {
             if (window.scrollY >= pxShow) {
-                if(!goTopButton.classList.contains('link-is-visible')) goTopButton.classList.add("link-is-visible")
+                if (!goTopButton.classList.contains('link-is-visible')) goTopButton.classList.add("link-is-visible")
             } else {
                 goTopButton.classList.remove("link-is-visible")
             }
@@ -297,8 +310,8 @@
 
 
 
-   /* initialize
-    * ------------------------------------------------------ */
+    /* initialize
+     * ------------------------------------------------------ */
     (function ssInit() {
 
         ssPreloader();
