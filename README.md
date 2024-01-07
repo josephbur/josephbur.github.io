@@ -16,6 +16,9 @@ Icons:
 Stock Photos and Graphics:
  - Unsplash.com (https://unsplash.com/)
 
+Background Image:
+- David Zalubowski/AP Photo (https://www.cpr.org/2020/08/12/colorado-wildfires-smoke-sunset-why-more-colorful/)
+
 Javascript Files:
  - Rellax.js (https://dixonandmoe.com/rellax/)
  - Swiper (https://swiperjs.com/)
