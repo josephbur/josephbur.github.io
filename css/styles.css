@@ -751,6 +751,13 @@ input[type="password"], textarea {
     padding: 0 var(--gutter-lg);
 }
 
+.column-2 {
+    -ms-flex: 1 1 0%;
+    -webkit-box-flex: 1;
+    flex: 1 1 0%;
+    padding: 0 0;
+}
+
 .collapse>.column, .column.collapse {
     padding: 0;
 }
@@ -4566,13 +4573,14 @@ input[type="button"].btn--primary:focus {
  * ------------------------------------------------------------------- */
 .s-contact {
     background-color: var(--color-gray-18);
-    padding-top: calc(6 * var(--space));
+    padding-top: calc(8 * var(--space));
     padding-bottom: var(--vspace-3_5);
 }
 
 .s-contact .section-header-allcaps {
     color: white;
-    margin-bottom: var(--vspace-2_5);
+    /* margin-bottom: var(--vspace-2_5); */
+    margin-bottom: 0;
 }
 
 .s-contact .huge-text {
@@ -4581,6 +4589,11 @@ input[type="button"].btn--primary:focus {
     font-weight: 400;
     font-size: 4.6rem;
     line-height: 1.304;
+}
+
+.s-contact h4 {
+    color: white;
+    margin-top: var(--vspace-1);
 }
 
 .s-contact__content [class*="column"]:last-child {
